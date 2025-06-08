@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # bootstrap.sh
-# Initializes the entire Memory System v3.0 directory structure and creates all required files
+# Initializes the entire Memory System v3.1 directory structure and creates all required files
 
-echo "🚀 Bootstrapping Memory System v3.0..."
+echo "🚀 Bootstrapping Memory System v3.1..."
 
 # Get current timestamp for file headers
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -86,7 +86,7 @@ updated: ${DATE}
 # Progress Log
 
 ## ${DATE}
-- **BOOTSTRAP**: Memory System v3.0 initialized
+- **BOOTSTRAP**: Memory System v3.1 initialized
 - **STATUS**: Ready for first mission definition
 EOF
 
@@ -154,7 +154,7 @@ EOF
 # 5. Create Makefile
 echo "📄 Creating Makefile..."
 cat > Makefile <<EOF
-# Makefile for Memory System v3.0 Operations
+# Makefile for Memory System v3.1 Operations
 
 # Ensure scripts are executable and system is ready
 .PHONY: all setup new-epic new-plan complete-plan log status clean
@@ -164,29 +164,29 @@ all: setup
 setup:
 	@chmod +x .scripts/*.sh
 	@echo "🛠️  All scripts are now executable."
-	@echo "✅ Memory System v3.0 is ready for operation."
+	@echo "✅ Memory System v3.1 is ready for operation."
 
 # --- Protocol Automation ---
 
 # Creates a new EPIC file
 # Usage: make new-epic title="High Level Mission Description"
 new-epic:
-	@.scripts/new_epic.sh "$(title)"
+	@.scripts/new_epic.sh "\$(title)"
 
 # Creates a new PLAN file
 # Usage: make new-plan epic="epic-filename" title="Specific Plan Title"
 new-plan:
-	@.scripts/new_plan.sh "$(epic)" "$(title)"
+	@.scripts/new_plan.sh "\$(epic)" "\$(title)"
 
 # Completes and archives a plan
 # Usage: make complete-plan name="plan-filename"
 complete-plan:
-	@.scripts/complete_plan.sh "$(name)"
+	@.scripts/complete_plan.sh "\$(name)"
 
 # Logs a quick update to the main status file
 # Usage: make log message="Completed database migration"
 log:
-	@.scripts/log_update.sh "$(message)"
+	@.scripts/log_update.sh "\$(message)"
 
 # Shows current system status
 status:
@@ -200,16 +200,16 @@ check-epic:
 clean:
 	@.scripts/cleanup.sh
 
-# Initialize git repository if not already done
+# Initialize a git repository if not already done
 git-init:
-	@if [ ! -d .git ]; then \
-		git init; \
-		git add .; \
-		git commit -m "Initial Memory System v3.0 bootstrap"; \
-		echo "📦 Git repository initialized"; \
-	else \
-		echo "📦 Git repository already exists"; \
-	fi
+        @if [ ! -d ../.git ]; then \
+                cd .. && git init; \
+                cd .. && git add .; \
+                cd .. && git commit -m "Initial Memory System v3.1 bootstrap"; \
+                echo "📦 Git repository initialized in parent directory"; \
+        else \
+                echo "📦 Git repository already exists in parent directory"; \
+        fi
 EOF
 
 # 6. Create helper scripts
@@ -233,7 +233,7 @@ FILENAME="$(date +"%Y-%m-%d")_${SLUG}.md"
 FILEPATH="plans/inprogress/${FILENAME}"
 
 # Check if EPIC already exists
-if ls plans/inprogress/*epic*.md 1> /dev/null 2>&1; then
+if find plans/inprogress/ -name "*.md" -exec grep -l "type: epic" {} \; 2>/dev/null | head -1 | grep -q .; then
     echo "❌ Error: An EPIC already exists in plans/inprogress/"
     echo "Complete the current EPIC before creating a new one."
     exit 1
@@ -298,7 +298,7 @@ FILENAME="$(date +"%Y-%m-%d")_${SLUG}.md"
 FILEPATH="plans/inprogress/${FILENAME}"
 
 # Check if PLAN already exists
-if ls plans/inprogress/*plan*.md 1> /dev/null 2>&1; then
+if find plans/inprogress/ -name "*.md" -exec grep -l "type: plan" {} \; 2>/dev/null | head -1 | grep -q .; then
     echo "❌ Error: A PLAN already exists in plans/inprogress/"
     echo "Complete the current PLAN before creating a new one."
     exit 1
@@ -419,7 +419,7 @@ else
                     
                     if [ "$MATCH_FOUND" = true ]; then
                         # Mark this phase as complete
-                        sed -i "s|^\\([[:space:]]*\\)-[[:space:]]*\\[[[:space:]]*\\]\\([[:space:]]*PHASE.*\\)|\\1- [x]\\2|" "$EPIC_PATH"
+                        sed -i "0,/^\\([[:space:]]*\\)-[[:space:]]*\\[[[:space:]]*\\]\\([[:space:]]*PHASE.*\\)/s//\\1- [x]\\2/" "$EPIC_PATH"
                         echo "✅ Marked PHASE as complete: $(echo "$line" | sed 's/^[[:space:]]*-[[:space:]]*\[[[:space:]]*\][[:space:]]*//')"
                         PHASE_MATCHED=true
                         break
@@ -544,7 +544,7 @@ else
     echo "  ❌ AI_OPERATIONAL_PROTOCOL.md missing"
 fi
 
-echo "  📦 Git status: $(if [ -d .git ]; then echo "Initialized"; else echo "Not initialized"; fi)"
+echo "  📦 Git status: $(if [ -d ../.git ]; then echo "Initialized"; else echo "Not initialized"; fi)"
 EOF
 
 # check_epic_completion.sh
@@ -720,8 +720,8 @@ echo "   2. Run 'make status' to see current system status"
 echo "   3. Run 'make git-init' to initialize git repository"
 echo "   4. Create your first EPIC: make new-epic title=\"Your Mission\""
 echo ""
-echo "📖 Memory System v3.0 is ready for AI operation!"
+echo "📖 Memory System v3.1 is ready for AI operation!"
 EOF
 
 echo "✅ Bootstrap script created successfully!"
-echo "🚀 Run './bootstrap.sh' to initialize the Memory System v3.0"
+echo "🚀 Run './bootstrap.sh' to initialize the Memory System v3.1"

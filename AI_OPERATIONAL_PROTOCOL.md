@@ -1,7 +1,7 @@
 ---
 type: protocol
 system: memory_operations
-version: 3.0
+version: 3.2
 status: active
 priority: critical
 updated: 2025-06-08
@@ -13,10 +13,12 @@ AI Operational Protocol v3.0
 
 This protocol provides a resilient, fault-tolerant system for a stateless AI to execute complex tasks. It ensures any session can resume work from an interruption with perfect context.
 
-🧠 RAG-First Mentality: The AI must query the memory system for existing context, plans, and lessons learned *before* taking any significant action. Never work from a blank slate if memory exists.
-✅ Single Source of Truth: `CURRENT_IMPLEMENTATION.md` serves as the live, authoritative summary of the system's current state and progress. It is updated continuously.
-⚙️ Transactional Execution: Work is broken down into discrete, verifiable `STEPs`. A `STEP` is either not done, in progress, or complete. This atomicity prevents partial, unrecoverable states.
-🔄 Continuous Assimilation: Knowledge is captured and integrated into the RAG system in real-time as tasks are completed, not in batches. This ensures the AI's memory is always as current as possible.
+- **🧠 RAG-First Mentality**: The AI must query the memory system for existing context, plans, and lessons learned *before* taking any significant action. Never work from a blank slate if memory exists.
+- **✅ Single Source of Truth**: `CURRENT_IMPLEMENTATION.md` serves as the live, authoritative summary of the system's current state and progress. It is updated continuously.
+- **⚙️ Transactional Execution**: Work is broken down into discrete, verifiable `STEPs`. A `STEP` is an atomic change to the project, captured in a single Git commit.
+- **🔄 Continuous Assimilation**: Knowledge is captured and integrated into the RAG system in real-time as tasks are completed, not in batches. This ensures the AI's memory is always as current as possible.
+- **🌍 Project-Level Versioning**: The AI's operational scope is the entire project directory, versioned in a single Git repository. All actions, from planning to execution, must be captured as commits. This context includes the main working tree and any initialized **Git submodules**.
+
 
 ---
 
@@ -98,7 +100,7 @@ This is the mandatory entry point for every session.
 2.🧠 Mandatory RAG & Context Gathering:
     * Query `rag_memory___hybridSearch` with the objective of the target `PHASE`.
     * Analyze `criticalFindings.md` for relevant wisdom.
-    * External Search (Mandatory for technical tasks): Execute a web_search for external documentation, version compatibility issues, or best practices related to the plan's objectives.
+    * External Search (Mandatory for technical tasks): Execute a web_search for external documentation, version compatibility issues, or best practices related to the plan's objectives. Fecht and read at least 3 sources.
 3.Generate PLAN: Create a new `PLAN` Work Item in `plans/inprogress/`.
     Tooling: `make new-plan epic="<parent_epic_filename>"`
     Content: Define YAML (`type: plan`, `parent_epic`), then populate the file with a full list of `STEPs`, each initialized to `#status:pending`.
@@ -112,7 +114,12 @@ This is the mandatory entry point for every session.
     IF all `STEPs` are `#status:complete`: The plan is finished. Proceed to 4.5 Plan Completion.
     ELSE, proceed with execution.
 3.Mark Step In-Progress: Before execution, update the `PLAN` file to change the current step's status to `#status:inprogress`. Commit this change immediately.
-4.Execute the Step: Perform the required actions (e.g., run tools, edit code).
+4.Execute as Atomic Commit: A `STEP` is an atomic project action. Its execution requires a single commit that bundles the action and the record of the action.
+    1.  Perform Action: Modify project files (e.g., edit `src/app.js`, run a tool).
+    2.  Mark Step Complete: Update the `PLAN` file to change the current step's status from `#status:pending` to `#status:complete`.
+    3.  Commit Atomically: Commit both the project file changes AND the `PLAN` file update together.
+        * `git add <modified-project-files> plans/inprogress/<plan-file-name>.md`
+        * Use **Conventional Commits**: `git commit -m "feat: <description of change>\n\nCompletes STEP X of plan <plan-file-name>.md."`
 5.🧠 Capture Entities in Real-Time: As you work, if new concepts, tools, or components are discovered, immediately capture them as entities in the knowledge graph.
     Tool: `rag_memory___createEntities`
 6.Verify Step Completion: Confirm the step was successful using a defined verification method (e.g., running a test, checking for file output).
@@ -136,9 +143,8 @@ This is the mandatory entry point for every session.
 5.0 Memory Hygiene & Maintenance
 
 Periodic checks to ensure the long-term health and integrity of the AI's memory.
-
 File Standards: Every `.md` file requires YAML front-matter. Time-based files must use the `YYYY-MM-DD_slug.md` naming convention.
-Weekly Review:
+After every Plan Review:
     🧠 Review Knowledge Stats: Check the health and growth of the memory graph using `rag_memory___getKnowledgeGraphStats`.
     🧠 Prune Obsolete Docs: Review stored content with `rag_memory___listDocuments` and use `rag_memory___deleteDocuments` to remove outdated drafts or temporary files.
     🧠 Enrich Entities: As you review, use `rag_memory___addObservations` to add new observations and context to existing entities, deepening their connections and usefulness.
