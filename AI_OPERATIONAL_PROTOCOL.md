@@ -37,13 +37,22 @@ PHASE: A logical component of an `EPIC`, defined as a checklist item.
     * Format: `- [ ] PHASE: High-level objective.`
 PLAN (`type: plan`): A detailed, step-by-step procedure to execute a single `PHASE`. It must reference its parent `EPIC`.
 STEP: A discrete, machine-executable task within a `PLAN`. Each `STEP` must have a status tag.
-    * Format: `- [ ] STEP: A specific, verifiable action. #status:pending`
+    * Format: `-  [ ] STEP 1: [First specific, actionable step] #status:pending`
 Statuses:
     * `#status:pending`: The step has not been started.
     * `#status:inprogress`: The step was started but did not complete. This is the first step to be re-evaluated upon session resumption.
     * `#status:complete`: The step was successfully executed and verified.
     * `#status:failed`: The step was attempted and failed. Requires investigation.
 
+2.3 Knowledge Capture: Findings and Lessons
+To ensure all operational knowledge is captured and made retrievable, the system uses a two-level approach. This aligns with the "Continuous Assimilation" core principle.
+criticalFindings.md (The Log): This is the primary, append-only log for all high-impact events.
+Use Case: For immediate, concise logging of any notable success, failure, or blocker.
+Linkage: May link to a detailed analysis in the critical-lessons/ directory if the finding is complex.
+RAG Integration: This file must be indexed by the RAG system immediately upon modification to make its contents available for future queries.
+critical-lessons/ (The Deep Dive): This directory holds detailed explanations.
+Use Case: Only used when a finding requires comprehensive detail (e.g., code snippets, error logs, or diagrams).
+RAG Integration: All files within this directory must be indexed by the RAG system upon creation.
 ---
 
 3.0 Work In Progress (WIP) Management
@@ -89,7 +98,7 @@ This is the mandatory entry point for every session.
 2.🧠 Mandatory RAG & Context Gathering:
     * Query `rag_memory___hybridSearch` with the objective of the target `PHASE`.
     * Analyze `criticalFindings.md` for relevant wisdom.
-    * Perform targeted external web searches (`web___search`) if internal context is insufficient.
+    * External Search (Mandatory for technical tasks): Execute a web_search for external documentation, version compatibility issues, or best practices related to the plan's objectives.
 3.Generate PLAN: Create a new `PLAN` Work Item in `plans/inprogress/`.
     Tooling: `make new-plan epic="<parent_epic_filename>"`
     Content: Define YAML (`type: plan`, `parent_epic`), then populate the file with a full list of `STEPs`, each initialized to `#status:pending`.
@@ -108,7 +117,7 @@ This is the mandatory entry point for every session.
     Tool: `rag_memory___createEntities`
 6.Verify Step Completion: Confirm the step was successful using a defined verification method (e.g., running a test, checking for file output).
 7.Mark Step as Complete: Upon verification, update the `PLAN` file to change the status to `#status:complete`. Commit this change immediately.
-8.Update Live State: Append a summary of the completed step to `progress.md` and update `CURRENT_IMPLEMENTATION.md` to reflect the progress.
+8.Update Live State: Uupdate `CURRENT_IMPLEMENTATION.md` to reflect the progress.
 
 4.5 Plan Completion & Knowledge Assimilation
 *Use Case: To be executed only when all `STEPs` in a `PLAN` are `#status:complete`.*

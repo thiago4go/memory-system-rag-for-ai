@@ -4,7 +4,7 @@ status: active
 updated: 2025-06-08
 ---
 
-# AI BOOT SEQUENCE: Memory System v2.2
+# AI BOOT SEQUENCE: Memory System v3.0
 
 **MANDATORY: Execute steps sequentially to initialize operational context.**
 
@@ -14,15 +14,16 @@ updated: 2025-06-08
 
 1.  **Ingest Current Mission**: Read and parse the contents of the following file:
     * `./CURRENT_IMPLEMENTATION.md`
-2.  **Ingest Active Plans**: Read and parse the contents of the following file:
-    * `./plans/index.md`
+2.  Identify Active Work: Determine the active EPIC and PLAN by scanning the inprogress directory.
+    Action: Scan the contents of the directory: ./plans/inprogress/
+    Resilience Mandate: The presence of files in this directory dictates the active work
 
 ## 2.0 CORE PROTOCOL INITIALIZATION
 
 **Objective**: Load the core operational logic.
 
 1.  **Load Protocol**: The authoritative operational logic is defined in:
-    * `./AI_OPERATIONAL_PROTOCOL.md` (Version 2.7 or later)
+    * `./AI_OPERATIONAL_PROTOCOL.md` (Version 3.0 or later)
 2.  **Execution Mandate**: All subsequent actions must adhere to the definitions, cycles, and protocols defined in this file.
 
 ## 3.0 KNOWLEDGE GRAPH CONTEXT QUERY
@@ -40,7 +41,7 @@ updated: 2025-06-08
 
 **Objective**: A reference map of the File-System Memory structure for path-based operations.
 
-.memory/
+./
 ├── CURRENT_IMPLEMENTATION.md  // [State] Live mission status.
 ├── README.md                  // [Boot] This file.
 ├── AI_OPERATIONAL_PROTOCOL.md // [Logic] Core operational rules.
