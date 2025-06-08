@@ -1,0 +1,28 @@
+# Makefile for Memory System v1.5 Operations
+
+# Ensure scripts are executable
+.PHONY: all setup new-plan complete-plan log
+all: setup
+
+setup:
+	@chmod +x .scripts/new_plan.sh
+	@chmod +x .scripts/complete_plan.sh
+	@chmod +x .scripts/log_update.sh
+	@echo "🛠️ Scripts are ready."
+
+# --- Protocol Automation ---
+
+# Creates a new plan file.
+# Usage: make new-plan name="describe-the-goal"
+new-plan:
+	@.scripts/new_plan.sh "$(name)"
+
+# Completes and archives a plan.
+# Usage: make complete-plan name="2025-06-08_initial-setup"
+complete-plan:
+	@.scripts/complete_plan.sh "$(name)"
+
+# Logs a quick update to the main status file.
+# Usage: make log message="Fixed the knowledge graph ingestion bug"
+log:
+	@.scripts/log_update.sh "$(message)"
