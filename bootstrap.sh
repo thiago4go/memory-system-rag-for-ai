@@ -229,7 +229,7 @@ fi
 
 TITLE="$1"
 SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
-FILENAME="$(date +%Y-%m-%d)_${SLUG}.md"
+FILENAME="$(date +"%Y-%m-%d")_${SLUG}.md"
 FILEPATH="plans/inprogress/${FILENAME}"
 
 # Check if EPIC already exists
@@ -294,7 +294,7 @@ fi
 EPIC_FILE="$1"
 TITLE="$2"
 SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
-FILENAME="$(date +%Y-%m-%d)_${SLUG}.md"
+FILENAME="$(date +"%Y-%m-%d")_${SLUG}.md"
 FILEPATH="plans/inprogress/${FILENAME}"
 
 # Check if PLAN already exists
@@ -446,7 +446,7 @@ else
             echo "📝 You may need to manually update the EPIC file"
         else
             # Update EPIC's updated timestamp
-            sed -i "s/updated: .*/updated: $(date -u +"%Y-%m-%dT%H:%M:%SZ")/" "$EPIC_PATH"
+            sed -i "s/updated: .*/updated: $(date -u +\"%Y-%m-%dT%H:%M:%SZ\")/" "$EPIC_PATH"
             
             # Remove backup since update was successful
             rm "${EPIC_PATH}.backup"
@@ -463,7 +463,8 @@ mv "$SOURCE_PATH" "$DEST_PATH"
 
 # Update the plan's status to completed
 sed -i 's/status: active/status: completed/' "$DEST_PATH"
-sed -i "s/updated: .*/completed: $(date -u +"%Y-%m-%dT%H:%M:%SZ")/" "$DEST_PATH"
+sed -i "s/updated: .*/completed: $(date -u +\"%Y-%m-%dT%H:%M:%SZ\")/" "$DEST_PATH"
+
 
 echo ""
 echo "✅ Plan completion summary:"
@@ -473,7 +474,7 @@ if [ -n "$PARENT_EPIC" ] && [ "$PHASE_MATCHED" = true ]; then
 fi
 echo ""
 echo "🔄 Next steps:"
-echo "   1. Update CURRENT_IMPLEMENTATION.md with detailed progress"
+echo "   1. Update CURRENT_IMPLEMENTATION.md with detailed state"
 echo "   2. Proceed with storing completed plan in RAG system"
 echo "   3. Check if EPIC is fully complete (all PHASEs marked [x])"
 EOF
