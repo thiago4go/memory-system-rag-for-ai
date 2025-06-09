@@ -1,7 +1,7 @@
 ---
 type: protocol
 system: memory_operations
-version: 3.2
+version: 3.3
 status: active
 priority: critical
 updated: 2025-06-08
@@ -45,7 +45,13 @@ Statuses:
     * `#status:inprogress`: The step was started but did not complete. This is the first step to be re-evaluated upon session resumption.
     * `#status:complete`: The step was successfully executed and verified.
     * `#status:failed`: The step was attempted and failed. Requires investigation.
-
+Context:
+    Each step must have a reference at least one or more of:
+        - Path for Documenetation (eg, ./docs/database-schema-analysis.md)
+        - Suggested Query for RAG (eg, "SDK for Python")
+        - Suggetted Query for Web Search (eg, "best pracites for xxx in this year")
+Deliverable:
+    Each step must have clear definition of a derivable.
 2.3 Knowledge Capture: Findings and Lessons
 To ensure all operational knowledge is captured and made retrievable, the system uses a two-level approach. This aligns with the "Continuous Assimilation" core principle.
 criticalFindings.md (The Log): This is the primary, append-only log for all high-impact events.
