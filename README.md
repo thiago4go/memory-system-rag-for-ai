@@ -46,6 +46,7 @@ updated: 2025-06-08
 ├── README.md                  // [Boot] This file.
 ├── AI_OPERATIONAL_PROTOCOL.md // [Logic] Core operational rules.
 ├── progress.md                // [Log] Append-only log of completed plans.
+├── makefile-tools.md          // [tools] memory operational tools description.
 ├── systemPatterns.md          // [Knowledge] Validated architectural patterns.
 ├── criticalFindings.md        // [Knowledge] Mission-critical blockers.
 ├── plans/                     // [Work] Directory for all plans.
