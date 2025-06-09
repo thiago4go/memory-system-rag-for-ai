@@ -202,14 +202,8 @@ clean:
 
 # Initialize a git repository if not already done
 git-init:
-        @if [ ! -d ../.git ]; then \
-                cd .. && git init; \
-                cd .. && git add .; \
-                cd .. && git commit -m "Initial Memory System v3.1 bootstrap"; \
-                echo "📦 Git repository initialized in parent directory"; \
-        else \
-                echo "📦 Git repository already exists in parent directory"; \
-        fi
+	@if [ ! -d ../.git ]; then 	cd .. && git init; 		cd .. && git add .; 		cd .. && git commit -m "Initial Memory System v3.0 bootstrap"; 		echo "📦 Git repository initialized"; 	else 		echo "📦 Git repository already exists"; 	fi
+
 EOF
 
 # 6. Create helper scripts

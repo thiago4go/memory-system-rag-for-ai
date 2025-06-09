@@ -11,7 +11,7 @@ updated: 2025-06-08
 ## 1.0 INITIAL STATE VECTOR INGESTION
 
 **Objective**: Load the minimum required state from the File-System Memory.
-0.  read ./Makefile and use make setup and make status. Remember the other useful tools.
+0.  read .memory/Makefile and use make setup and make status. Remember the other useful tools.
 1.  **Ingest Current Mission**: Read and parse the contents of the following file:
     * `./CURRENT_IMPLEMENTATION.md`
 2.  Identify Active Work: Determine the active EPIC and PLAN by scanning the inprogress directory.
