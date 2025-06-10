@@ -8,6 +8,8 @@ echo "🚀 Bootstrapping Memory System v3.1..."
 # Get current timestamp for file headers
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 DATE=$(date +"%Y-%m-%d")
+# 0. Remove the .memory git directory
+rm -rf .git
 
 # 1. Create Core Directory Structure
 echo "📁 Creating directory structure..."
@@ -17,6 +19,7 @@ mkdir -p plans/completed
 mkdir -p critical-lessons
 mkdir -p product-view
 mkdir -p tech-context
+
 
 # 2. Create CURRENT_IMPLEMENTATION.md
 echo "📄 Creating CURRENT_IMPLEMENTATION.md..."
