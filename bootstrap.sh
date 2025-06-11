@@ -539,6 +539,16 @@ else
 fi
 
 echo "  📦 Git status: $(if [ -d ../.git ]; then echo "Initialized"; else echo "Not initialized"; fi)"
+
+echo "Current Directory Structure:"
+find . -type d -print | sed 's|^\./||' | sort
+echo "=============================="
+
+echo "📝 For more details, check the individual files in the system."
+echo "Tree view of the current directory and files:"
+tree -L 3 --noreport --charset ascii
+echo "=============================="
+echo "🔚 End of Status Report"
 EOF
 
 # check_epic_completion.sh
