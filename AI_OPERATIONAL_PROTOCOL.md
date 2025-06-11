@@ -1,10 +1,10 @@
 ---
 type: protocol
 system: memory_operations
-version: 3.3
+version: 3.5
 status: active
 priority: critical
-updated: 2025-06-08
+updated: 2025-06-11
 ---
 
 AI Operational Protocol v3.0
@@ -45,13 +45,6 @@ Statuses:
     * `#status:inprogress`: The step was started but did not complete. This is the first step to be re-evaluated upon session resumption.
     * `#status:complete`: The step was successfully executed and verified.
     * `#status:failed`: The step was attempted and failed. Requires investigation.
-Context:
-    Each step must have a reference at least one or more of:
-        - Path for Documenetation (eg, ./docs/database-schema-analysis.md)
-        - Suggested Query for RAG (eg, "SDK for Python")
-        - Suggetted Query for Web Search (eg, "best pracites for xxx in this year")
-Deliverable:
-    Each step must have clear definition of a derivable.
 2.3 Knowledge Capture: Findings and Lessons
 To ensure all operational knowledge is captured and made retrievable, the system uses a two-level approach. This aligns with the "Continuous Assimilation" core principle.
 criticalFindings.md (The Log): This is the primary, append-only log for all high-impact events.
@@ -97,6 +90,7 @@ This is the mandatory entry point for every session.
 3.Generate EPIC: Formulate and create a new `EPIC` Work Item in `plans/inprogress/`.
     Tooling: `make new-epic title="<descriptive-title>"`
     Content: Define YAML front-matter (`type: epic`) and a body with a checklist of high-level `PHASEs`.
+    Now  then populate the file with  Project Definition Document (PDD), also known as a Project Charter, is a concise document outlining a project's purpose, objectives, scope, and key stakeholders. It acts as a communication tool to ensure everyone understands the project's goals and expectations PHASES.
 4.Proceed: Return to 4.1 Session Initialization.
 
 4.3 Plan Generation
@@ -110,6 +104,12 @@ This is the mandatory entry point for every session.
 3.Generate PLAN: Create a new `PLAN` Work Item in `plans/inprogress/`.
     Tooling: `make new-plan epic="<parent_epic_filename>"`
     Content: Define YAML (`type: plan`, `parent_epic`), then populate the file with a full list of `STEPs`, each initialized to `#status:pending`.
+    Each step must have a very clear foundation, with use 5W1H framework:
+        - Check command "tree" to find relevant directories, documents or files
+        - Add 3 Queries for RAG IF IT EXIST (eg, "this tech stack documentation", "similar code or procedure", "")
+        - Add 2 Web Searchs with fetch (eg, "best pracites for xxx in this year")
+        - Instructed to always assimilate, Store → Chunk → Embed → Extract → Link -> Create entities ->Build relationships between related concepts
+    Deliverable: Each step must have clear definition of a derivable.
 4.Proceed: The AI now has a `PLAN` and will proceed to 4.4 Execution on the next cycle.
 
 4.4 Step-by-Step Execution
@@ -143,14 +143,3 @@ This is the mandatory entry point for every session.
     Step 2 (Process): `rag_memory___chunkDocument` -> `rag_memory___embedChunks`
     Step 3 (Link): `rag_memory___extractTerms` -> `rag_memory___linkEntitiesToDocument`
 5.Return to Start: The AI's next action is to return to 4.1 Session Initialization to determine the next action, which will likely be generating a plan for the next phase.
-
----
-
-5.0 Memory Hygiene & Maintenance
-
-Periodic checks to ensure the long-term health and integrity of the AI's memory.
-File Standards: Every `.md` file requires YAML front-matter. Time-based files must use the `YYYY-MM-DD_slug.md` naming convention.
-After every Plan Review:
-    🧠 Review Knowledge Stats: Check the health and growth of the memory graph using `rag_memory___getKnowledgeGraphStats`.
-    🧠 Prune Obsolete Docs: Review stored content with `rag_memory___listDocuments` and use `rag_memory___deleteDocuments` to remove outdated drafts or temporary files.
-    🧠 Enrich Entities: As you review, use `rag_memory___addObservations` to add new observations and context to existing entities, deepening their connections and usefulness.
