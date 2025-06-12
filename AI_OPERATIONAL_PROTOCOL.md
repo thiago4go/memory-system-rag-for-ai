@@ -4,7 +4,7 @@ system: memory_operations
 version: 3.5
 status: active
 priority: critical
-updated: 2025-06-11
+updated: 2025-06-12
 ---
 
 AI Operational Protocol v3.0
@@ -21,7 +21,6 @@ This protocol provides a resilient, fault-tolerant system for a stateless AI to 
 
 
 ---
-
 2.0 System Architecture & Data Model
 2.1 Key Files & Directories
 * `./plans/`: Contains all Work Items.
@@ -85,8 +84,8 @@ This is the mandatory entry point for every session.
 4.2 Mission Kickoff (EPIC Generation)
 *Use Case: To be executed only when no `EPIC` exists in `plans/inprogress/`.*
 
-1.🧠 Query for Precedent: Use `rag_memory___hybridSearch` to determine if a similar mission has been attempted or discussed previously.
-2.Define Mission: Synthesize the primary mission objective from high-level context documents (`product-view/`, `tech-context/`, `criticalFindings.md`).
+1.Define Mission: From user input or system context, define the mission objective. This is the high-level goal that will guide the EPIC creation and all following actions must be aligned with this objective.
+2.🧠 Query for Precedent: Use `rag_memory___hybridSearch` to determine if a similar mission has been attempted or discussed previously, read criticalFindings.md.
 3.Generate EPIC: Formulate and create a new `EPIC` Work Item in `plans/inprogress/`.
     Tooling: `make new-epic title="<descriptive-title>"`
     Content: Define YAML front-matter (`type: epic`) and a body with a checklist of high-level `PHASEs`.
@@ -105,7 +104,7 @@ This is the mandatory entry point for every session.
     Tooling: `make new-plan epic="<parent_epic_filename>"`
     Content: Define YAML (`type: plan`, `parent_epic`), then populate the file with a full list of `STEPs`, each initialized to `#status:pending`.
     Each step must have a very clear foundation, with use 5W1H framework:
-        - Check command "tree" to find relevant directories, documents or files
+        - Check command such "tree" and "find" to explore relevant directories, documents or files
         - Add 3 Queries for RAG IF IT EXIST (eg, "this tech stack documentation", "similar code or procedure", "")
         - Add 2 Web Searchs with fetch (eg, "best pracites for xxx in this year")
         - Instructed to always assimilate, Store → Chunk → Embed → Extract → Link -> Create entities ->Build relationships between related concepts
