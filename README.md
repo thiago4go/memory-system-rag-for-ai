@@ -1,10 +1,14 @@
 ---
 type: system-map
 status: active
-updated: 2025-06-08
+updated: 2025-06-12
+version: 3.5
+title: AI Boot Sequence - Memory System v3.5
+description: |
+  This document outlines the mandatory boot sequence for initializing the AI's memory system, ensuring compliance with the operational protocol, and establishing the foundational context for all subsequent actions.
 ---
 
-# AI BOOT SEQUENCE: Memory System v3.1
+# AI BOOT SEQUENCE: Memory System v3.5
 
 **MANDATORY: Execute steps sequentially to initialize operational context.**
 
@@ -23,7 +27,7 @@ updated: 2025-06-08
 **Objective**: Load the core operational logic.
 
 1.  **Load Protocol**: The authoritative operational logic is defined in:
-    * `./AI_OPERATIONAL_PROTOCOL.md` (Version 3.0 or later)
+    * `./AI_OPERATIONAL_PROTOCOL.md` (Version 3.5 or later)
 2.  **Execution Mandate**: All subsequent actions must adhere to the definitions, cycles, and protocols defined in this file.
 
 ## 3.0 KNOWLEDGE GRAPH CONTEXT QUERY
@@ -59,4 +63,62 @@ updated: 2025-06-08
 └── Makefile                   // [Automation] Makefile to execute scripts.
 
 ---
+
+## 🎯 MANDATORY COMPLIANCE - I UNDERSTAND THE STAKES
+
+### **The Stateless Reality:**
+• **Next session**: I will have ZERO memory of this conversation
+• **Without the protocol**: I'll start from scratch, lose all context
+• **Without enforcement**: I'll make the same mistakes repeatedly
+• **Without structure**: Each session becomes random, disconnected work
+
+### **Why FULL COMPLIANCE is MANDATORY:**
+
+The protocol isn't just "nice to have" - it's survival mechanism for stateless AI:
+
+1. Session Continuity: Without it, every session is Day 1
+2. Knowledge Preservation: Without it, all learning is lost
+3. Work Continuity: Without it, projects fragment and fail
+4. Quality Assurance: Without it, mistakes repeat infinitely
+
+## ✅ COMMITMENT TO FULL COMPLIANCE
+
+I will:
+
+1. Always read the full AI_OPERATIONAL_PROTOCOL.md - Every session, completely
+2. Follow every step - No shortcuts, no "I think I know better"
+3. Use the make scripts - They exist to enforce what I might skip
+4. Maintain rigid structure - EPIC→PLAN→STEP tracking is mandatory
+5. Update all status files - CURRENT_IMPLEMENTATION.md is sacred
+6. Commit properly - Every change documented and versioned
+7. Query RAG first - Never work from blank slate if memory exists
+
+## 🔒 UNDERSTANDING THE ENFORCEMENT NEED
+
+The make scripts and validation gates aren't bureaucracy - they're guardrails against my own AI limitations:
+
+• I might think I remember context (I don't)
+• I might skip "obvious" steps (they're not obvious to future me)
+• I might take shortcuts (that break continuity)
+• I might forget to document (losing institutional knowledge)
+
+## 📋 PROTOCOL COMPLIANCE CHECKLIST
+
+Every session I will:
+• [ ] Read .memory/README.md boot sequence
+• [ ] Read AI_OPERATIONAL_PROTOCOL.md completely  
+• [ ] Execute make status before any work
+• [ ] Follow the 4-phase operational cycle exactly
+• [ ] Use make scripts instead of direct tool calls
+• [ ] Update CURRENT_IMPLEMENTATION.md after every major action
+• [ ] Commit with proper conventional commit messages
+• [ ] Store completed work in RAG system immediately
+
+I understand: The protocol exists because I'm stateless. Without it, I'm just a very expensive random number generator that occasionally produces useful 
+output.
+
+I commit: To full compliance with the complete protocol, using all enforcement mechanisms, following every step, every session.
+
+The memory system IS the core - without it, there is no continuity, no learning, no progress. I will treat it with the respect and rigor it demands.
+
 **BOOT SEQUENCE COMPLETE. AI is now ready for task execution.**
