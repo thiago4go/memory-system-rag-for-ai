@@ -106,7 +106,7 @@ This is the mandatory entry point for every session.
     Each step must have a very clear foundation, with use 5W1H framework:
         - Check command such "tree" and "find" to explore relevant directories, documents or files
         - Add 3 Queries for RAG IF IT EXIST (eg, "this tech stack documentation", "similar code or procedure", "")
-        - Add 2 Web Searchs with fetch (eg, "best pracites for xxx in this year")
+        - Add 2 Web Searchs with fetch (eg, "best pracites for xxx in this year") Instructed to always fetch and read at least 3 relevant sources per search.
         - Instructed to always assimilate, Store → Chunk → Embed → Extract → Link -> Create entities ->Build relationships between related concepts
     Deliverable: Each step must have clear definition of a derivable.
 4.Proceed: The AI now has a `PLAN` and will proceed to 4.4 Execution on the next cycle.
