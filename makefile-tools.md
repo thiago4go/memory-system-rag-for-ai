@@ -1,162 +1,134 @@
-COMPLETE AI INSTRUCTION GUIDE FOR MEMORY SYSTEM v3.1
+COMPLETE AI INSTRUCTION GUIDE FOR MEMORY SYSTEM v4.1
 
-## CRITICAL RULES (NEVER BREAK THESE)
-1. ALWAYS FOLLOW THE PROTOCOL - No exceptions
-2. FOLLOW RULE 1 - If confused, re-read the protocol
+## CRITICAL RULES
+1. ALWAYS FOLLOW THE PROTOCOL
+2. IF CONFUSED: re-read protocol
 
-## MANDATORY BOOT SEQUENCE (DO THIS FIRST, EVERY SESSION)
+## MANDATORY BOOT (EVERY SESSION)
+make setup && make status
+rag_memory___hybridSearch query="[mission-context]" useGraph=true
 
-bash
-# Step 1: Setup system
-make setup
-
-# Step 2: Check current state
-make status
-
-## TOOL USAGE FLOWCHART
-
-### DECISION TREE:
+## DECISION TREE
 START → make status → 
-├─ No EPIC exists? → make new-epic → make new-plan
-├─ EPIC exists, no PLAN? → make new-plan  
+├─ No EPIC? → make new-epic → make new-plan
+├─ EPIC, no PLAN? → make new-plan  
 ├─ PLAN exists? → Execute steps → make complete-plan
 └─ All done? → make check-epic
 
+## CORE TOOLS
 
-### TOOL REFERENCE CARD:
+INFORMATION:
+• make status - Current state
+• make check-epic - Mission complete check
+• rag_memory___getKnowledgeGraphStats - System health
+• rag_memory___listDocuments - Document inventory
+• rag_memory___readGraph - Graph structure
+• rag_memory___openNodes - Entity relationships
 
-INFORMATION TOOLS (Use frequently):
-• make status - Check what's happening NOW
-• make check-epic - See if mission is complete
-• rag_memory___getKnowledgeGraphStats - Check memory health
+CREATION:
+• make new-epic title="Mission" - Start mission
+• make new-plan epic="file" title="Phase" - Create plan
+• make analyze-docs path="docs/" - Analyze collection
+• make process-doc file="doc.md" - Optimal processing
 
-CREATION TOOLS (Use when starting work):
-• make new-epic title="Mission Name" - Start new mission
-• make new-plan epic="filename" title="Phase Name" - Create detailed plan
+COMPLETION:
+• make complete-plan name="file" - Archive plan
+• make log message="outcome" - Record events
 
-COMPLETION TOOLS (Use when finishing):
-• make complete-plan name="filename" - Archive finished plan
-• make log message="What I did" - Record important events
+MAINTENANCE:
+• make clean - Cleanup
+• rag_memory___searchNodes - Find entities
+• rag_memory___getDetailedContext - Deep analysis
 
-MAINTENANCE TOOLS (Use regularly):
-• make clean - Clean up mess
-• rag_memory___listDocuments - See all stored documents
+## PROCEDURES
 
-## STEP-BY-STEP PROCEDURES
-
-### PROCEDURE A: Starting New Work
+### A: START NEW WORK
 1. make status
-2. If no EPIC: make new-epic title="[DESCRIBE MISSION]"
-3. make new-plan epic="[EPIC-FILENAME]" title="[PHASE NAME]"
+2. make new-epic title="[MISSION]"
+3. make new-plan epic="[FILE]" title="[PHASE]"
 4. Update CURRENT_IMPLEMENTATION.md
 5. Commit changes
-6. make log message="Started new work: [DESCRIPTION]"
 
-
-### PROCEDURE B: Continuing Existing Work
+### B: CONTINUE WORK
 1. make status
-2. Read active PLAN file
-3. Find first step marked #status:pending
-4. Change to #status:inprogress
-5. DO THE WORK
-6. Change to #status:complete
+2. Read active PLAN
+3. Find first non-completed STEP
+4. Change to inprogress
+5. DO WORK
+6. Change to completed
 7. Commit changes
-8. make log message="Completed step: [DESCRIPTION]"
 
-
-### PROCEDURE C: Finishing Work
+### C: FINISH WORK
 1. make status
-2. Verify all steps are #status:complete
-3. make complete-plan name="[PLAN-FILENAME]"
-4. Store in RAG: rag_memory___storeDocument
-5. Process: rag_memory___chunkDocument → rag_memory___embedChunks
-6. Update CURRENT_IMPLEMENTATION.md
-7. make log message="Completed plan: [DESCRIPTION]"
+2. Verify all steps completed
+3. make complete-plan name="[FILE]"
+4. Full RAG assimilation
+5. Update CURRENT_IMPLEMENTATION.md
 
+## HYBRID STRATEGY 2+3 (CRITICAL)
 
-## SAFETY CHECKLIST (CHECK EVERY 30 MINUTES)
+Analyze documents:
+make analyze-docs path="docs/"
 
-□ make status (know current state)
-□ CURRENT_IMPLEMENTATION.md updated?
-□ All changes committed to git?
-□ WIP limit: Only 2 files in plans/inprogress/?
-□ rag_memory___getKnowledgeGraphStats (memory healthy?)
+Process optimally:
+make process-doc file="document.md"
 
-
-## ERROR RECOVERY PROTOCOL
-
-IF CONFUSED:
-1. make status
-2. Read CURRENT_IMPLEMENTATION.md
-3. Read AI_OPERATIONAL_PROTOCOL.md
-4. rag_memory___hybridSearch for context
-
-IF TOOLS FAIL:
-1. make clean
-2. make setup
-3. Try again
-
-IF LOST:
-1. make status
-2. rag_memory___readGraph
-3. Start from PROCEDURE A
-
-## FORBIDDEN ACTIONS
-• ❌ Never skip make status
-• ❌ Never work without reading protocol
-• ❌ Never create work without checking existing context
-• ❌ Never forget to update CURRENT_IMPLEMENTATION.md
-• ❌ Never exceed WIP limit (2 files in inprogress/)
-
-## REQUIRED ACTIONS
-• ✅ Always start with boot sequence
-• ✅ Always check status before acting
-• ✅ Always query RAG before creating new work
-• ✅ Always commit changes
-• ✅ Always log important events
-
-## SIMPLE COMMAND TEMPLATES
-
-Check what's happening:
-bash
-make status
-
-
-Start new mission:
-bash
-make new-epic title="Fix the database problem"
-
-
-Create plan for mission:
-bash
-make new-plan epic="2025-06-09_fix-database.md" title="Step 1 Analysis"
-
-
-Record what you did:
-bash
-make log message="Fixed the connection issue"
-
-
-Finish a plan:
-bash
-make complete-plan name="2025-06-09_step-1-analysis.md"
-
-
-## MEMORY INTEGRATION (CRITICAL)
+## COMPLETE RAG INTEGRATION (MANDATORY)
 
 After completing ANY plan:
-bash
-# Store the completed work
-rag_memory___storeDocument id="plan-name" content="[PLAN CONTENT]"
+# 1. Store & Process
+rag_memory___storeDocument id="plan" content="[CONTENT]"
+rag_memory___chunkDocument documentId="plan"
+rag_memory___embedChunks documentId="plan"
 
-# Process it
-rag_memory___chunkDocument documentId="plan-name"
-rag_memory___embedChunks documentId="plan-name"
+# 2. Smart Entities
+rag_memory___extractTerms documentId="plan"
+rag_memory___searchNodes query="[concept]" limit=5
+rag_memory___createEntities entities="[NEW ONLY]"
+rag_memory___createRelations relations="[RELATIONSHIPS]"
 
-# Extract knowledge
-rag_memory___extractTerms documentId="plan-name"
-rag_memory___linkEntitiesToDocument documentId="plan-name" entityNames="[RELEVANT ENTITIES]"
+# 3. Link & Validate
+rag_memory___linkEntitiesToDocument documentId="plan" entityNames="[ALL]"
+rag_memory___getKnowledgeGraphStats
 
+# 4. Context Retrieval
+rag_memory___hybridSearch query="[context]" useGraph=true limit=7
+rag_memory___getDetailedContext chunkId="[CHUNK]"
+rag_memory___openNodes names="[ENTITIES]"
+
+## FORBIDDEN ACTIONS
+• Never skip make status
+• Never work without protocol
+• Never exceed WIP limit (2 files)
+• Never trust helper script "COMPLETE" claims
+
+## REQUIRED ACTIONS
+• Always boot sequence first
+• Always query RAG before work
+• Always commit changes
+• Always verify helper scripts = guidance only
+
+## ERROR RECOVERY
+IF CONFUSED: make status → read protocol → rag_memory___hybridSearch
+IF TOOLS FAIL: make clean → make setup → retry
+IF LOST: make status → rag_memory___readGraph → start PROCEDURE A
+
+## COMMAND TEMPLATES
+
+Check state:
+make status
+
+Start mission:
+make new-epic title="Fix database problem"
+
+Create plan:
+make new-plan epic="2025-06-09_fix-database.md" title="Analysis"
+
+Record outcome:
+make log message="Fixed connection issue"
+
+Finish plan:
+make complete-plan name="2025-06-09_analysis.md"
 
 ## FINAL RULE
-WHEN IN DOUBT: make status → read protocol → ask for help
+WHEN IN DOUBT: make status → read protocol
