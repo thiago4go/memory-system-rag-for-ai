@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "rag-memory": {
+      "command": "node",
+      "args": ["/home/thiago/rag/dist/index.js"],
+      "env": {
+        "DB_TYPE": "postgresql",
+        "PG_HOST": "ep-green-math-a79uozqe-pooler.ap-southeast-2.aws.neon.tech",
+        "PG_PORT": "5432",
+        "PG_DATABASE": "test-rag",
+        "PG_USERNAME": "neondb_owner",
+        "PG_PASSWORD": "npg_ZkSF23Myzbds",
+        "PG_SSL": "true",
+        "VECTOR_DIMENSIONS": "384",
+        "ENABLE_DB_LOGGING": "true",
+        "QUERY_TIMEOUT": "30000"
+      }
+    }
+  }
+}
