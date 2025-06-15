@@ -29,9 +29,9 @@ updated: 2025-06-13
 - `criticalFindings.md`: Critical lessons log
 
 ### Work Items
-**EPIC**: MVP mission with value PHASEs. One active only.
+**EPIC**: MVP mission with value PHASEs. One active only. [type: epic]
 **PHASE**: `- [ ] PHASE: [deliverable] #value:[benefit] #validate:[criteria]`
-**PLAN**: Step sequence for one PHASE. References parent EPIC.
+**PLAN**: Step sequence for one PHASE. References parent EPIC. [type: plan]
 **STEP**: `- [ ] STEP X: [Action] → [Deliverable] → [Value] #status:pending #validate:[criteria]`
 
 ### Status Tags
@@ -49,15 +49,16 @@ updated: 2025-06-13
 ## 4.0 OPERATIONAL CYCLE
 
 ### 4.1 Session Init (MANDATORY ENTRY)
-1. Read `CURRENT_IMPLEMENTATION.md` + scan `plans/inprogress/`
+1. Read `CURRENT_IMPLEMENTATION.md` + scan `plans/inprogress/` for active EPIC or PLAN
 2. Execute `rag_memory___getKnowledgeGraphStats` + `rag_memory___listDocuments`
 3. Execute `rag_memory___hybridSearch` with mission context
 4. Use `rag_memory___getDetailedContext` for relevant chunks
 5. Synthesize context
 6. Determine action:
-   - IF PLAN exists → Go to 4.4 Execution
-   - IF EPIC exists, no PLAN → Go to 4.3 Planning
-   - IF no EPIC → Go to 4.2 Mission Start
+   - IF PLAN exists but NO EPIC → HALT (invalid state) a PLAN MUST reference an EPIC
+   - IF NO EPIC and NO PLAN → Go to 4.2 Mission Start
+   - IF NO PLAN but EPIC exists → Go to 4.3 Planning
+   - IF EPIC + PLAN exist and are aligned → Go to 4.4 Execution
 
 ### 4.2 Mission Start
 1. Define MVP objective from user input
@@ -104,7 +105,17 @@ updated: 2025-06-13
    - Entities: `rag_memory___extractTerms` → `rag_memory___searchNodes` → `rag_memory___createEntities` → `rag_memory___createRelations`
    - Link: `rag_memory___linkEntitiesToDocument` → `rag_memory___getKnowledgeGraphStats`
 5. Document value vs expected in `criticalFindings.md`
-6. Return to 4.1
+6. IF EPIC complete go to 4.6 EPIC Completion, 
+   ELSE return to 4.1 
+
+### 4.6 EPIC Completion
+1. Update `CURRENT_IMPLEMENTATION.md` with EPIC value
+2. Validate EPIC completion:
+   - All PHASEs completed
+   - Business value achieved
+   - Technical validation passed
+3. Archive EPIC: `make complete-epic`
+4. Return to 4.1
 
 ## 5.0 VALIDATION GATES
 

@@ -4,7 +4,7 @@ COMPLETE AI INSTRUCTION GUIDE FOR MEMORY SYSTEM v4.1
 1. ALWAYS FOLLOW THE PROTOCOL
 2. IF CONFUSED: re-read protocol
 
-## MANDATORY BOOT (EVERY SESSION)
+## MANDATORY BOOT (EVERY SESSION) from .memory directory
 make setup && make status
 rag_memory___hybridSearch query="[mission-context]" useGraph=true
 

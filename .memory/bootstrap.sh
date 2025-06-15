@@ -9,8 +9,6 @@ echo "🚀 Bootstrapping Memory System ${SYSTEMVERSION}..."
 # Get current timestamp for file headers
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 DATE=$(date +"%Y-%m-%d")
-# 0. Remove the .memory git directory
-rm -rf .git
 
 # 1. Create Core Directory Structure
 echo "📁 Creating directory structure..."
@@ -18,8 +16,6 @@ mkdir -p .scripts
 mkdir -p plans/inprogress
 mkdir -p plans/completed
 mkdir -p critical-lessons
-mkdir -p product-view
-mkdir -p tech-context
 
 
 # 2. Create CURRENT_IMPLEMENTATION.md
@@ -293,7 +289,7 @@ title: ${TITLE}
 - **Pivot**: <change_criteria>
 EOL
 
-echo "✅ Created EPIC: $FILEPATH"
+echo "✅ Created EPIC: $FILEPATH" - GO AND UPDATE IT!
 echo "📝 Next step: Update CURRENT_IMPLEMENTATION.md with the new mission"
 EOF
 
@@ -353,6 +349,8 @@ title: ${TITLE}
 
 ## Research
 - **RAG**: <memory_context>
+- **Web Search**: <relevant_links>
+- **Assumptions**: <assumptions>
 - **Lessons**: <critical_findings>
 - **External**: <sources_if_needed>
 
@@ -378,7 +376,7 @@ title: ${TITLE}
 <additional_context>
 EOL
 
-echo "✅ Created PLAN: $FILEPATH"
+echo "✅ Created PLAN: $FILEPATH" - GO AND UPDATE IT!
 echo "📝 Next step: Begin executing steps and update status tags"
 EOF
 
@@ -604,8 +602,8 @@ else
     echo "  ❌ CURRENT_IMPLEMENTATION.md missing - CRITICAL"
 fi
 
-if [ -f "AI_OPERATIONAL_PROTOCOL_v4_OPTIMIZED.md" ]; then
-    echo "  ✅ AI_OPERATIONAL_PROTOCOL_v4_OPTIMIZED.md exists"
+if [ -f "AI_OPERATIONAL_PROTOCOL.md" ]; then
+    echo "  ✅ AI_OPERATIONAL_PROTOCOL.md exists"
 else
     echo "  ❌ Protocol file missing - CRITICAL"
 fi
@@ -615,7 +613,7 @@ echo "  📦 Git status: $(if [ -d ../.git ]; then echo "Initialized"; else echo
 echo ""
 echo "📁 Enhanced Directory Structure:"
 echo "📝 File structure with type indicators:"
-tree -L 3 --noreport --charset ascii -F --dirsfirst 2>/dev/null || tree -L 3 --noreport --charset ascii 2>/dev/null || echo "tree command not available"
+tree .. -L 3 --noreport --charset ascii -F --dirsfirst 2>/dev/null || tree .. -L 3 --noreport --charset ascii 2>/dev/null || echo "tree command not available"
 
 echo ""
 echo "⚠️  PROTOCOL ENFORCEMENT:"
@@ -700,7 +698,7 @@ find . -name "*~" -delete
 find . -name ".DS_Store" -delete
 
 # Validate directory structure
-REQUIRED_DIRS=("plans/inprogress" "plans/completed" "critical-lessons" "product-view" "tech-context" ".scripts")
+REQUIRED_DIRS=("plans/inprogress" "plans/completed" "critical-lessons" ".scripts")
 
 for dir in "${REQUIRED_DIRS[@]}"; do
     if [ ! -d "$dir" ]; then
@@ -1183,46 +1181,6 @@ EOF
 echo "🔧 Making scripts executable..."
 chmod +x .scripts/*.sh
 
-# 8. Create product-view and tech-context placeholder files
-echo "📄 Creating context files..."
-
-cat > product-view/README.md <<EOF
----
-type: context
-category: product
-status: active
-updated: ${DATE}
----
-
-# Product View
-
-This directory contains product-related context, goals, and definitions.
-
-## Files to Create:
-- \`goals.md\` - High-level product goals and objectives
-- \`requirements.md\` - Functional and non-functional requirements
-- \`stakeholders.md\` - Key stakeholders and their concerns
-- \`metrics.md\` - Success metrics and KPIs
-EOF
-
-cat > tech-context/README.md <<EOF
----
-type: context
-category: technical
-status: active
-updated: ${DATE}
----
-
-# Technical Context
-
-This directory contains technical environment specifications and constraints.
-
-## Files to Create:
-- \`architecture.md\` - System architecture overview
-- \`constraints.md\` - Technical constraints and limitations
-- \`dependencies.md\` - External dependencies and integrations
-- \`environment.md\` - Development and deployment environments
-EOF
 
 # 9. Final status report
 echo ""
@@ -1233,8 +1191,6 @@ echo "✅ Created directory structure:"
 echo "   - plans/inprogress/ (WIP limit: 2)"
 echo "   - plans/completed/ (archive)"
 echo "   - critical-lessons/ (knowledge)"
-echo "   - product-view/ (context)"
-echo "   - tech-context/ (context)"
 echo "   - .scripts/ (automation)"
 echo ""
 echo "✅ Created core files:"
