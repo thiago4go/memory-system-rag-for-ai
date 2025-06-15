@@ -25,6 +25,7 @@ cp -r <path-to-cloned-repo>/.memory  <your-project-root>/.memory
 ### 1. Bootstrap the System
 ```bash
 # Make bootstrap script executable and run it
+cd <your-project-root>/.memory
 chmod +x bootstrap.sh
 ./bootstrap.sh
 ```

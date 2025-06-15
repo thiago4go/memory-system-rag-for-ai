@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(.scripts/test_regex_patterns.sh:*)",
+      "Bash(ls:*)"
+    ],
+    "deny": []
+  }
+}
